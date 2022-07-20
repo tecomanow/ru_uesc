@@ -109,7 +109,7 @@ class CardapioController extends Controller
     public function update(Request $request, $id)
     {
 
-        $cardapio = Cardapio::findOrFail($request->cardapio['id']);
+        $cardapio = Cardapio::findOrFail($id);
 
         $cafe = CafeManha::findOrFail($cardapio->id_cafe);
         $cafe->principal = $request->cardapio['cafe']['principal'];
@@ -128,18 +128,19 @@ class CardapioController extends Controller
         $almoco->save();
 
         $janta = Janta::findOrFail($cardapio->id_janta);
-        $cafe->principal = $request->cardapio['janta']['principal'];
-        $cafe->paes = $request->cardapio['janta']['paes'];
-        $cafe->frutas = $request->cardapio['janta']['frutas'];
-        $cafe->sucos = $request->cardapio['janta']['sucos'];
+        $janta->principal = $request->cardapio['janta']['principal'];
+        $janta->paes = $request->cardapio['janta']['paes'];
+        $janta->frutas = $request->cardapio['janta']['frutas'];
+        $janta->sucos = $request->cardapio['janta']['sucos'];
 
-        $cafe->save();
+        $janta->save();
 
         //$cafe = CafeManha::create($request->cardapio['cafe']);
         //$almoco = Almoco::create($request->cardapio['almoco']);
         //$janta = Janta::create($request->cardapio['janta']);
 
         print_r($request->cardapio['almoco']['proteinas']);
+        print_r($id);
 
         /*$jantaQuery = DB::table('jantas')->where('data', $date)->first();
         $cafeQuery = DB::table('cafe_manhas')->where('data', $date)->first();
@@ -176,7 +177,18 @@ class CardapioController extends Controller
 
     public function destroy($id)
     {
-        $cardapio = Cardapio::destroy($id);
+
+        $cardapio = Cardapio::find($id);
+        $cafe = $cardapio->cafeManha();
+        $almoco = $cardapio->almoco();
+        $janta = $cardapio->janta();
+
+        $cardapio->delete();
+        $cafe->delete();
+        $almoco->delete();
+        $janta->delete();
+
+        //$cardapio = Cardapio::destroy($id);
         return $cardapio;
     }
     public function getCardapioFromDate($date) {

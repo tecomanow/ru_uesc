@@ -53,11 +53,6 @@ class AlmocoController extends Controller
         return $almoco;
     }
 
-    public function getFromSalada($salada) {
-        $almocos = DB::table('almocos')->where('saladas', $salada);
-        return $almocos->get();
-    }
-
     public function getAlmocoFromDate($date) {
         $almocos = DB::table('almocos')->where('data', $date);
         return $almocos->get();

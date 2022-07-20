@@ -15,7 +15,7 @@ class Cardapio extends Model
     /*protected $fillable = ['cafe_principal', 'cafe_paes', 'cafe_frutas', 'cafe_sucos','id_cafe', 'almoco_proteinas', 
     'almoco_saladas', 'almoco_complementos', 'almoco_sucos','id_almoco', 'janta_principal', 'janta_paes', 'janta_frutas', 'janta_sucos', 'id_janta', 'data'];*/
 
-    protected $fillable = ['id_cafeManha','id_almoco','id_janta','data'];
+    protected $fillable = ['id_cafeManha','id_almoco','id_janta'];
 
     public function almoco() {
         return $this->hasOne(Almoco::class, 'id', 'id_almoco');
